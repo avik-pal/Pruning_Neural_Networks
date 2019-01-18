@@ -2,17 +2,21 @@
 
 ## Problem Description
 
-We have a simple 3 hidden layered neural network. All the layers are a simple linear layer without any bias, i.e., a simple matmul.
+We have a simple 3 hidden layered neural network. All the layers are a simple linear layer without any bias, i.e., a simple matmul and followed by relu activation.
 
-$$ out = relu(input \times W)$$
+```python
+out = tf.maximum(tf.matmul(x, W), 0.0)
+```
 
-The entire neural network is simply described as:
+The entire neural network can be simply described as:
 
-$$ out_1 = relu(input \times W_1) $$
-$$ out_2 = relu(out_1 \times W_2) $$
-$$ out_3 = relu(out_2 \times W_3) $$
-$$ out_4 = relu(out_3 \times W_4) $$
-$$ out = softmax(out_4 \times W_5) $$
+```python
+out1 = tf.maximum(tf.matmul(inp, W1), 0.0)
+out2 = tf.maximum(tf.matmul(out1, W2), 0.0)
+out3 = tf.maximum(tf.matmul(out2, W3), 0.0)
+out4 = tf.maximum(tf.matmul(out3, W4), 0.0)
+out5 = tf.maximum(tf.matmul(out4, W5), 0.0)
+```
 
 Now we have 2 pruning strategies -
 1. Weight Pruning
@@ -52,16 +56,17 @@ If you want to train 1 model at a time use the `main_alternate.py` script.
 
 ### Accuracy vs Epoch Plots
 
-| ![Training Neuron Pruning][./plots/Train_Accuracy_Neuron_Pruning.png] | ![Training Weight Pruning][./plots/Train_Accuracy_Weight_Pruning.png] |
+| ![Training Neuron Pruning](./plots/Train_Accuracy_Neuron_Pruning.png) | ![Training Weight Pruning](./plots/Train_Accuracy_Weight_Pruning.png) |
 |:-:|:-:|
-| ![Testing Neuron Pruning][./plots/Test_Accuracy_Neuron_Pruning.png] | ![Testing Weight Pruning][./plots/Test_Accuracy_Weight_Pruning.png] |
+| ![Testing Neuron Pruning](./plots/Test_Accuracy_Neuron_Pruning.png) | ![Testing Weight Pruning](./plots/Test_Accuracy_Weight_Pruning.png) |
 
 ### Accuracy vs Sparsity
 
-| ![Accuracy Neuron Pruning][./plots/Accuracy_vs_Sparsity_for_Neuron_Pruning.png] | ![Accuracy Weight Pruning][./plots/Accuracy_vs_Sparsity_for_Weight_Pruning.png] |
+| ![Accuracy Neuron Pruning](./plots/Accuracy_vs_Sparsity_for_Neuron_Pruning.png) | ![Accuracy Weight Pruning](./plots/Accuracy_vs_Sparsity_for_Weight_Pruning.png) |
 |:-:|:-:|
-| ![Training Accuracy Pruning]["./plots/Training_Accuracy_Comparison_for_different_Pruning_Strategies.png"] | ![Testing Accuracy Pruning]["./plots/Testing_Accuracy_Comparison_for_different_Pruning_Strategies.png"] |
+| ![Training Accuracy Pruning](./plots/Training_Accuracy_Comparison_for_different_Pruning_Strategies.png) | ![Testing Accuracy Pruning](./plots/Testing_Accuracy_Comparison_for_different_Pruning_Strategies.png) |
 
 ## Hypothesis
 
 ## Tricks to Speed up the Computation with Sparse Models
+
