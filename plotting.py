@@ -19,7 +19,7 @@ plt.legend()
 plt.title("Train Accuracy Weight Pruning")
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Train Accuracy Weight Pruning.png")
+plt.savefig("./plots/Train_Accuracy_Weight_Pruning.png")
 plt.close()
 
 
@@ -31,7 +31,7 @@ plt.legend()
 plt.title("Test Accuracy Weight Pruning")
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Test Accuracy Weight Pruning.png")
+plt.savefig("./plots/Test_Accuracy_Weight_Pruning.png")
 plt.close()
 
 
@@ -43,7 +43,7 @@ plt.legend()
 plt.title("Train Accuracy Neuron Pruning")
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Train Accuracy Neuron Pruning.png")
+plt.savefig("./plots/Train_Accuracy_Neuron_Pruning.png")
 plt.close()
 
 
@@ -55,7 +55,7 @@ plt.legend()
 plt.title("Test Accuracy Neuron Pruning")
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Test Accuracy Neuron Pruning.png")
+plt.savefig("./plots/Test_Accuracy_Neuron_Pruning.png")
 plt.close()
 
 
@@ -65,7 +65,7 @@ plt.title("Accuracy vs Sparsity for Neuron Pruning")
 plt.legend()
 plt.xlabel("Sparsity Percent")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Accuracy vs Sparsity for Neuron Pruning.png")
+plt.savefig("./plots/Accuracy_vs_Sparsity_for_Neuron_Pruning.png")
 plt.close()
 
 
@@ -75,7 +75,7 @@ plt.title("Accuracy vs Sparsity for Weight Pruning")
 plt.legend()
 plt.xlabel("Sparsity Percent")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Accuracy vs Sparsity for Weight Pruning.png")
+plt.savefig("./plots/Accuracy_vs_Sparsity_for_Weight_Pruning.png")
 plt.close()
 
 
@@ -85,7 +85,7 @@ plt.title("Training Accuracy Comparison for different Pruning Strategies")
 plt.legend()
 plt.xlabel("Sparsity Percent")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Training Accuracy Comparison for different Pruning Strategies.png")
+plt.savefig("./plots/Training_Accuracy_Comparison_for_different_Pruning_Strategies.png")
 plt.close()
 
 
@@ -95,6 +95,6 @@ plt.title("Testing Accuracy Comparison for different Pruning Strategies")
 plt.legend()
 plt.xlabel("Sparsity Percent")
 plt.ylabel("Accuracy")
-plt.savefig("./plots/Testing Accuracy Comparison for different Pruning Strategies.png")
+plt.savefig("./plots/Testing_Accuracy_Comparison_for_different_Pruning_Strategies.png")
 plt.close()
 
