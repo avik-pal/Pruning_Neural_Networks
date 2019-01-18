@@ -1,15 +1,13 @@
-import os
 from multiprocessing import Pool
 import subprocess
-
 
 def run_process(process_desc):
     subprocess.run(["python", "train.py", "-p", process_desc[0], "-k", process_desc[1],
                     "-a", process_desc[2], "-t", process_desc[3], "-l", process_desc[4]],
                    stdout=subprocess.DEVNULL)
 
-os.makedirs("logfiles", exist_ok=True)
-for k in [0, 25, 50, 60, 70, 80, 90, 95, 97, 99]:
+
+for k in [0]:
     # Put these inside a directory
     train_acc_file_0 = "./logfiles/train_acc_k_{}_strategy_0".format(k)
     train_acc_file_1 = "./logfiles/train_acc_k_{}_strategy_1".format(k)
@@ -23,6 +21,6 @@ for k in [0, 25, 50, 60, 70, 80, 90, 95, 97, 99]:
     processes = (["0", str(k), train_acc_file_0, test_acc_file_0, log_file_0],
                  ["1", str(k), train_acc_file_1, test_acc_file_1, log_file_1])
 
-    with Pool(processes=2) as p:
-        p.map(run_process, processes)
+    run_process(processes[0])
+    run_process(processes[1])
 

@@ -19,8 +19,6 @@ parser.add_argument("-e", "--epochs", type=int, default=100,
                     help="Total number of epochs to train the model")
 parser.add_argument("-k", "--prune_percent", type=int, default=0,
                     help="Percentage of the neurons/weights to be pruned")
-# parser.add_argument("-c", "--checkpoint", default="./model.ckpt",
-#                     help="Path to save the model weights")
 parser.add_argument("-a", "--train_accuracy_file", default="./train_accuracy.npy",
                     help="Path to store the train accuracy file")
 parser.add_argument("-t", "--test_accuracy_file", default="./test_accuracy.npy",
@@ -124,8 +122,6 @@ summary_writer.set_as_default()
 
 net = PruningNeuralNetwork(k, strategy)
 
-# saver = tfe.Saver(net.variables)
-
 opt = tf.train.AdamOptimizer(0.001)
 
 print("Starting for k = {}".format(k))
@@ -142,8 +138,10 @@ for epoch in range(EPOCHS):
     with tf.contrib.summary.always_record_summaries():
         tf.contrib.summary.scalar("Train Accuracy", train_acc_history[epoch])
 
+    net.training = False
     for (xb, yb) in tfe.Iterator(test_ds.batch(256)):
         test_accuracy(tf.argmax(net(tf.constant(xb)), axis=1), tf.argmax(tf.constant(yb), axis=1))
+    net.training = True
 
     print("Testing Accuracy after {} Epochs = {}".format(epoch, test_accuracy.result().numpy()))
 
@@ -151,8 +149,6 @@ for epoch in range(EPOCHS):
 
     with tf.contrib.summary.always_record_summaries():
         tf.contrib.summary.scalar("Test Accuracy", test_acc_history[epoch])
-
-# saver.save(path)
 
 np.save(args.train_accuracy_file, train_acc_history)
 np.save(args.test_accuracy_file, test_acc_history)
