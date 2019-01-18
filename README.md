@@ -52,6 +52,8 @@ You can use `train.py` to train individual models. For the instructions use `pyt
 
 If you want to train 1 model at a time use the `main_alternate.py` script.
 
+The results will be logged using tensorboard, so they can be viewed by using `tensorboard --logdir logs`
+
 ## Results
 
 ### Accuracy vs Epoch Plots
@@ -66,7 +68,26 @@ If you want to train 1 model at a time use the `main_alternate.py` script.
 |:-:|:-:|
 | ![Training Accuracy Pruning](./plots/Training_Accuracy_Comparison_for_different_Pruning_Strategies.png) | ![Testing Accuracy Pruning](./plots/Testing_Accuracy_Comparison_for_different_Pruning_Strategies.png) |
 
-## Hypothesis
+## Conclusions
 
-## Tricks to Speed up the Computation with Sparse Models
+1. From the accuracy curves it is clearly visible that we should always prefer using `Weight Pruning` over `Neuron Pruning`. However, it should be duly noted that Weight Pruning is a very expensive process. And the total training time for this is twice of that of the Neuron Pruning. However, the inference time for both is the same. So if we are able to sacrifice some training time we get some strong performance for Weight Pruning.
+
+2. Making the networks sparse allow us to store the weights much more efficiently (in terms of space). Also it hardly affects inference time compared to dense models.
+
+3. In Weight Pruning, we drop the weights which have the least absolute value. This is intuitive because those weights were not affecting the output much compared to the other neurons. Hence those weights were not carrying too much valuable information. So dropping them results in the other weights easily capture the information contained in them. Though the above plots might lead us into believing that we can indefinitely (ofcourse within reasonable bounds) increase sparsity without affecting performance. This is indeed incorrect. On furthur increasing the sparsity our result is as follows:
+
+| ![Train Accuracy Weight Pruning](./plots/Train_Accuracy_Weight_Pruning_2.png) | ![Test Accuracy Weight Pruning](./plots/Test_Accuracy_Weight_Pruning_2.png) |
+|:-:|:-:|
+
+4. In Neuron Pruning, dropping an entire neuron affects the model much more critically. Since we are making the value of a neuron zero, we are stopping the flow of a lot of information. Because, every layer loses `k%` of its neurons, the effective sparsity in this case is much larger. In case of weight pruning, making individual weights zero doesn't lead to a lot of information loss while propagation because effectively the value of the neurons in each hidden layer does not change much, so it does not affect the following layer.
+
+5. Also if inference time is not of much concern, we can convert the dense weights to sparse tensors, this will allow us to save a lot of memory without sacrificing much speed. The conversion is pretty simple as well:
+
+```python
+# W1 is a Dense Tensor
+SW1 = tf.contrib.layers.dense_to_sparse(W1)
+# Of course we need to take care of the dimensions of x.
+# If we `time` it we see only a small speed bump. 
+tf.sparse.matmul(SW1, x)
+```
 

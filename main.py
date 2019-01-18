@@ -8,6 +8,7 @@ def run_process(process_desc):
                     "-a", process_desc[2], "-t", process_desc[3], "-l", process_desc[4]],
                    stdout=subprocess.DEVNULL)
 
+
 os.makedirs("logfiles", exist_ok=True)
 for k in [0, 25, 50, 60, 70, 80, 90, 95, 97, 99]:
     # Put these inside a directory
